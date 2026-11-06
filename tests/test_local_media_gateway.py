@@ -20,7 +20,10 @@ from src.schemas.video_jobs import VideoJob
 class GatewayTests(unittest.TestCase):
     def setUp(self):
         self.patches = [patch.object(gateway, "TOKEN", "test-token"), patch.object(gateway, "API_KEY", "provider-secret"),
-                        patch.object(gateway, "BASE_URL", "https://provider.invalid/api/v1")]
+                        patch.object(gateway, "BASE_URL", "https://provider.invalid/api/v1"),
+                        patch.object(gateway.Config, "T2I_MODEL", "wan2.7-image-pro"),
+                        patch.object(gateway.Config, "VIDEO_MODEL", "happyhorse-1.0-i2v"),
+                        patch.object(gateway.Config, "VIDEO_SIZE", "720x1280")]
         for item in self.patches:
             item.start()
             self.addCleanup(item.stop)
