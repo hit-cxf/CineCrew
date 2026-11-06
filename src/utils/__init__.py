@@ -91,6 +91,8 @@ def generate_structured_data(
         max_retries=Config.LLM_MAX_RETRIES,
         max_completion_tokens=Config.LLM_MAX_COMPLETION_TOKENS,
     )
+    if "dashscope" in (Config.LLM_BASE_URL or "") and kwargs["model"].lower().startswith("qwen"):
+        kwargs["extra_body"] = {"enable_thinking": False}
     # Prefer create_with_completion to obtain both content and the raw completion (instructor >= 1.0)
     if hasattr(client, "create_with_completion"):
         content, raw = client.create_with_completion(**kwargs)
